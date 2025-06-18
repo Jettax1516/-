@@ -127,7 +127,7 @@ export default function Documents() {
         Выезд: ${documentData.check_out_date || "не указана"}
         Количество дней: ${days}
         
-        СУММА К ОПЛАТЕ: ${documentData.total_amount} руб.
+        СУММА К ОПЛАТЕ: ${calculateAmount(documentData.check_in_date, documentData.check_out_date, clientRoom.price_per_night)} руб.
         ${
           price > 0
             ? `(${price} руб. × ${days} ${days === 1 ? "день" : "дней"})`
@@ -249,9 +249,7 @@ export default function Documents() {
             <div className="form-group">
               <label>Сумма к оплате:</label>
               <div className="amount-display">
-                {documentData.total_amount} руб.
-                {clientRoom?.price_per_night &&
-                  documentData.total_amount !== "0.00" && (
+                {calculateAmount(documentData.check_in_date, documentData.check_out_date, clientRoom.price_per_night)} руб.
                     <span className="amount-breakdown">
                       ({clientRoom.price_per_night} руб. ×{" "}
                       {calculateDays(
@@ -260,7 +258,6 @@ export default function Documents() {
                       )}{" "}
                       дней)
                     </span>
-                  )}
               </div>
             </div>
 
